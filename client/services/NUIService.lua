@@ -1929,7 +1929,7 @@ local nuiService = {
 			if not CONFIG.INVENTORY_UI.HAND_CRAFT_BUTTON then
 				return
 			end
-			local idx <const> = tonumber(data and data.recipeIndex)
+			local idx <const> = tonumber(data and data.recipeIndex) + 1
 
 			if CONFIG.HAND_CRAFTING[idx] then
 				local result <const> = CORE.Callback.TriggerAwait("vorp_inventory:callback:HandCrafting", idx)
