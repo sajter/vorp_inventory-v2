@@ -689,6 +689,8 @@ local InventoryService <const> = {
 				return CORE.NotifyRightTip(_source, LANG.noAmmoOfThisType .. ammotype, 2000)
 			end
 
+			local player2ammo <const> = targetAmmoData.ammo[ammotype]
+
 			if not player2ammo then
 				USERS_AMMO_DATA[target].ammo[ammotype] = 0
 			end
