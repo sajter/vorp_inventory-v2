@@ -57,12 +57,6 @@ local function canContinue(id, jobName, grade, charid)
 	return true
 end
 
-local function getTotalAmmountInCustomInventory(id, amount)
-	local currentWeaponsAmount = DB_SERVICE.SECONDARY.GET_TOTAL_WEAPONS(id)
-	local currentItemsAmount = DB_SERVICE.SECONDARY.GET_TOTAL_ITEMS(id)
-	local total = amount + currentWeaponsAmount + currentItemsAmount
-	return total
-end
 
 CreateThread(function()
 	SetTimeout(15000, function()

@@ -1936,7 +1936,7 @@ INVENTORY.MAIN = {
                         return;
                     }
 
-                    // Main → main reorder
+
                     if ($drag.closest("#inventoryElement").length > 0) {
                         const x = event.clientX ?? event.originalEvent?.clientX;
                         const y = event.clientY ?? event.originalEvent?.clientY;
@@ -1955,7 +1955,7 @@ INVENTORY.MAIN = {
                         return;
                     }
 
-                    // Secondary → specific empty main slot
+
                     if ($drag.closest("#secondInventoryElement").length > 0 && INVENTORY.MAIN.IS_MAIN_EMPTY_SLOT($drop)) {
                         const sx = event.clientX ?? event.originalEvent?.clientX;
                         const sy = event.clientY ?? event.originalEvent?.clientY;
@@ -1967,9 +1967,46 @@ INVENTORY.MAIN = {
                         $drag.data("invDropAccepted", true);
                         const info = $("#secondInventoryElement").data("info");
                         pendingDropTargetSlot = $drop[0];
+
                         if (type in INVENTORY.SECONDARY.ACTION_TAKE_LIST) {
                             const { action, id, customtype } = INVENTORY.SECONDARY.ACTION_TAKE_LIST[type];
                             INVENTORY.SECONDARY.POST_ACTION(action, dragItemData, id(), customtype, info);
+                        } else if (type === "store") {
+                            INVENTORY.DISABLE(500);
+
+                            if (dragItemData.type != "item_weapon") {
+                                if (dragItemData.count === 1 || isShiftActive === true) {
+                                    const qty = isShiftActive ? dragItemData.count : 1;
+                                    INVENTORY.SECONDARY.TAKE_FROM_STORE(dragItemData, qty);
+                                    return;
+                                }
+
+                                dialog.prompt({
+                                    title: LANGUAGE.prompttitle,
+                                    button: LANGUAGE.promptaccept,
+                                    required: true,
+                                    item: dragItemData,
+                                    type: dragItemData.type,
+                                    input: {
+                                        type: "number",
+                                        autofocus: "true",
+                                    },
+                                    validate: function (value) {
+                                        if (!value) {
+                                            dialog.close();
+                                            return;
+                                        }
+
+                                        if (!UTILS.IS_INT(value)) {
+                                            return;
+                                        }
+
+                                        INVENTORY.SECONDARY.TAKE_FROM_STORE(dragItemData, value);
+                                    },
+                                });
+                            } else {
+                                INVENTORY.SECONDARY.TAKE_FROM_STORE(dragItemData, 1);
+                            }
                         }
                     }
                 },
@@ -2428,9 +2465,9 @@ $("document").ready(function () {
             if (LuaConfig.TooltipPlacement) {
                 Config.TooltipPlacement = LuaConfig.TooltipPlacement;
             }
-           
-                Config.MainInventoryFixedSlotCount = LuaConfig.MainInventoryFixedSlotCount;
-           
+
+            Config.MainInventoryFixedSlotCount = LuaConfig.MainInventoryFixedSlotCount;
+
             if (Config.EnableHotbar && event.data.hotbarPos) {
                 hotbarCustomPos = event.data.hotbarPos;
             }
