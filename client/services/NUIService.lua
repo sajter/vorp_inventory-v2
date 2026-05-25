@@ -83,8 +83,8 @@ local function useWeapon(data)
 	if not weapon:getUsed() and not weapon:getUsed2() then
 		local blocked, kind, maxAllowed = INVENTORY_SERVICE.IS_WEAPON_EQUIP_BLOCKED_BY_LIMIT(weaponId, weapon:getName())
 		if blocked then
-			local tplLong <const> = "You cannot equip more long guns at once (limit: %s)."
-			local tplShort <const> = "You cannot equip more short guns at once (limit: %s)."
+			local tplLong <const> = LANG.cannotEquipMoreLongGuns
+			local tplShort <const> = LANG.cannotEquipMoreShortGuns
 			local msg <const> = kind == "long" and string.format(tplLong, tostring(maxAllowed)) or string.format(tplShort, tostring(maxAllowed))
 			CORE.NotifyRightTip(msg, 5000)
 			NUI_SERVICE.WEAPON.UPDATE_ICON(weapon:getId())
@@ -728,8 +728,7 @@ local nuiService = {
 			})
 
 			if not result then
-				CORE.NotifyRightTip("No players found", 5000)
-				return
+				return CORE.NotifyRightTip(LANG.noPlayersFound, 5000)
 			end
 
 			local target = result
@@ -819,7 +818,7 @@ local nuiService = {
 				if not objectPositionData then return print("Failed to get object position data") end
 
 				if isInRoad(objectPositionData.position) then
-					return CORE.NotifyRightTip("You cannot drop this item close to roads", 5000)
+					return CORE.NotifyRightTip(LANG.cannotDropNearRoads, 5000)
 				end
 
 				data.advanced = objectPositionData
@@ -872,7 +871,7 @@ local nuiService = {
 
 
 				if objectPositionData and isInRoad(objectPositionData.position) then
-					return CORE.NotifyRightTip("You cannot drop this item close to roads", 5000)
+					return CORE.NotifyRightTip(LANG.cannotDropNearRoads, 5000)
 				end
 
 				data.advanced = objectPositionData
@@ -903,7 +902,7 @@ local nuiService = {
 				end
 
 				if isInRoad(objectPositionData.position) then
-					return CORE.NotifyRightTip("You cannot drop this item close to roads", 5000)
+					return CORE.NotifyRightTip(LANG.cannotDropNearRoads, 5000)
 				end
 
 				data.advanced = objectPositionData
@@ -1189,7 +1188,7 @@ local nuiService = {
 			NUI_SERVICE.INVENTORY.CLOSE()
 			local startCleaning = false
 			if not weapon:getUsed() then
-				return CORE.NotifyRightTip("Must be equipped to inspect", 5000)
+				return CORE.NotifyRightTip(LANG.mustBeEquippedToInspect, 5000)
 			end
 
 			if CACHE.Weapon == `WEAPON_UNARMED` or CACHE.Weapon ~= joaat(weapon:getName()) then
@@ -1232,10 +1231,10 @@ local nuiService = {
 			local hasItem, id = PLAYER_INVENTORY:HasItem(CONFIG.CLEAN_WEAPON_ITEM)
 			if weaponStatus.degradation == 1.0 then
 				if not hasItem then
-					CORE.NotifyRightTip("You do not have the required item to clean this weapon", 5000)
+					CORE.NotifyRightTip(LANG.notRequiredItemToClean, 5000)
 				else
 					if not CONFIG.RESTORE_WEAPON_DEGRADATION then
-						CORE.NotifyRightTip("You can't clean this weapon because it's is degraded and cannot be restored", 5000)
+						CORE.NotifyRightTip(LANG.cannotCleanCauseNotDegraded, 5000)
 					end
 				end
 				SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', false, -1)
@@ -1246,7 +1245,6 @@ local nuiService = {
 					SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', false, -1)
 				end
 			end
-
 
 			local result = false
 			while true do

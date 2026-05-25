@@ -100,7 +100,7 @@ RegisterServerEvent("vorp_inventory:Server:SaddleOpen", function(netId)
 
     local mindist = 5.0
     if #(horsePosition - playerPosition) > mindist then
-        return CORE.NotifyObjective(_source, "You are not close enough to the horse", 5000)
+        return CORE.NotifyObjective(_source, LANG.notCloseEnoughToHorse, 5000)
     end
 
     local id = CONFIG.OPEN_SADDLE(charId, model, entity, netId)
