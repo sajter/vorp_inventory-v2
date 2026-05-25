@@ -112,6 +112,8 @@ local function useWeapon(data)
 		end)
 
 		TriggerServerEvent("syn_weapons:weaponused", data)
+		local isDual = true
+		TriggerEvent("vorp_inventory:onWeaponEquipped", weapon:getComponents(), weaponId, weapon:getName(), isDual)
 	else
 		weapon:equipwep()
 		if not isThrowable and not isMelee then
@@ -125,6 +127,8 @@ local function useWeapon(data)
 		weapon:setUsed(true, true)
 
 		TriggerServerEvent("syn_weapons:weaponused", data)
+		local isDual = false
+		TriggerEvent("vorp_inventory:onWeaponEquipped", weapon:getComponents(), weaponId, weapon:getName(), isDual)
 	end
 
 	if weapon:getUsed() then
@@ -1223,26 +1227,23 @@ local nuiService = {
 			local databind <const> = setUpDatabinding(weaponHash, weaponObject)
 			StartAudioSceneset("weapon", "Inspect_Item_Scenes")
 
-			if CONFIG.CLEAN_WEAPON_ITEM ~= nil and CONFIG.CLEAN_WEAPON_ITEM ~= "" then
-				local hasItem, id = PLAYER_INVENTORY:HasItem(CONFIG.CLEAN_WEAPON_ITEM)
-				if weaponStatus.degradation == 1.0 then
-					if not hasItem then
-						CORE.NotifyRightTip(LANG.notRequiredItemToClean, 5000)
-					else
-						if not CONFIG.RESTORE_WEAPON_DEGRADATION then
-							CORE.NotifyRightTip(LANG.cannotCleanCauseNotDegraded, 5000)
-						end
-					end
-					SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', false, -1)
+			local hasItem, id = PLAYER_INVENTORY:HasItem(CONFIG.CLEAN_WEAPON_ITEM)
+			if weaponStatus.degradation == 1.0 then
+				if not hasItem then
+					CORE.NotifyRightTip(LANG.notRequiredItemToClean, 5000)
 				else
-					if weaponStatus.degradation ~= 0.0 and weaponStatus.soot ~= 0.0 and weaponStatus.dirt ~= 0.0 then
-						SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', true, -1)
-					else
-						SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', false, -1)
+					if not CONFIG.RESTORE_WEAPON_DEGRADATION then
+						CORE.NotifyRightTip(LANG.cannotCleanCauseNotDegraded, 5000)
 					end
 				end
+				SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', false, -1)
+			else
+				if weaponStatus.degradation ~= 0.0 and weaponStatus.soot ~= 0.0 and weaponStatus.dirt ~= 0.0 then
+					SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', true, -1)
+				else
+					SetPedBlackboardBool(CACHE.Ped, 'GENERIC_WEAPON_CLEAN_PROMPT_AVAILABLE', false, -1)
+				end
 			end
-
 
 			local result = false
 			while true do
