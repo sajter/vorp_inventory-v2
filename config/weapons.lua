@@ -6,7 +6,8 @@ local scopes <const> = {
     COMPONENT_RIFLE_SCOPE04 = true,
 }
 
-SHARED_DATA.WEAPONS  = {
+
+SHARED_DATA.WEAPONS                      = {
     WEAPON_LASSO = {
         Name           = "Lasso",
         Desc           = "Used Up When You Hogtie Someone, The Reinforced one has unlimited hogtie usage",
@@ -1367,4 +1368,47 @@ SHARED_DATA.WEAPONS  = {
         NoDegradation  = true, -- DONT TOUCH THIS THIS WEAPON DOESNT DEGRADE NATIVELY
         NoAmmo         = true, -- this weapon does not need ammo to be used
     },
+}
+
+-- weapon categories allowed in loadout table under comps
+-- {BARREL = "COMPONENT_SHOTGUN_DOUBLEBARREL_BARREL_SHORT"} -- example of data of comps loadout
+SHARED_DATA.WEAPONS_COMPONENT_CATEGORIES = {
+    BARREL = true,
+    BARREL_ENGRAVING = true,
+    BARREL_ENGRAVING_MATERIAL = true,
+    BARREL_MATERIAL = true,
+    BARREL_RIFLING = true,
+    CLIP = true,
+    CYLINDER_ENGRAVING = true,
+    CYLINDER_ENGRAVING_MATERIAL = true,
+    CYLINDER_MATERIAL = true,
+    CYLINDER_TINT = true,
+    FRAME_ENGRAVING = true,
+    FRAME_ENGRAVING_MATERIAL = true,
+    FRAME_MATERIAL = true,
+    FRAME_VERTDATA = true,
+    GRIP = true,
+    GRIP_MATERIAL = true,
+    GRIP_TINT = true,
+    GRIPSTOCK_ENGRAVING = true,
+    GRIPSTOCK_TINT = true,
+    HAMMER_MATERIAL = true,
+    MAG = true,
+    MELEE_BLADE_ENGRAVING = true,
+    MELEE_BLADE_ENGRAVING_MATERIAL = true,
+    MELEE_BLADE_MATERIAL = true,
+    SCOPE = true,
+    SIGHT = true,
+    SIGHT_MATERIAL = true,
+    STOCK = true,
+    STRAP = true,
+    STRAP_TINT = true,
+    TORCH_MATCHSTICK = true,
+    TRIGGER_MATERIAL = true,
+    TRIGGER_TINT = true,
+    TUBE = true,
+    WRAP = true,
+    WRAP_MATERIAL = true,
+    WRAP_TINT = true,
+
 }

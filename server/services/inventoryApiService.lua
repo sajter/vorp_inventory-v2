@@ -1213,9 +1213,8 @@ local InventoryAPI = {
 									return false
 								else
 									-- is valid key ?
-									local _value = SHARED_DATA.WEAPONS[wepname]?.Components[key]
-									if not _value then
-										print("the key is not a valid key see weapons.lua in componets for the keys that need to be used.")
+									if not SHARED_DATA.WEAPONS_COMPONENT_CATEGORIES[key] then
+										print("the key is not a valid key see weapons.lua for allowed keys in loadout table under comps.")
 										return false
 									end
 								end

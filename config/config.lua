@@ -15,7 +15,6 @@ CONFIG.SHOW_PLAYER_NAME    = false   -- When giving an item, show the character 
 
 
 -- WEAPON CONFIGURATION
--- currently THIS is only working for NPCS
 CONFIG.REMOVE_LASSO                      = true -- If true, the lasso will be removed when player hogties an NPC, only works if MANUAL_WEAPON_RELOAD is true
 
 CONFIG.DISABLE_HIP_FIRE                  = true -- If true, DISABLES hip fire and players must aim to shoot
