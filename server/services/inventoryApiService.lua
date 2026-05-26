@@ -1200,34 +1200,36 @@ local InventoryAPI = {
 			if not comps then
 				comps = {}
 			else
-				local function isValidTable()
-					-- only for weapons that has components
-					local components <const> = SHARED_DATA.WEAPONS[wepname]?.Components
-					if not components then return true end
+				if CONFIG.USE_WEAPON_COMPONENTS then
+					local function isValidTable()
+						-- only for weapons that has components
+						local components <const> = SHARED_DATA.WEAPONS[wepname]?.Components
+						if not components then return true end
 
-					-- is comps an array ?
-					if type(comps) == "table" then
-						for key, value in pairs(comps) do
-							if type(key) ~= "string" then
-								return false
-							else
-								-- is valid key ?
-								local _value = SHARED_DATA.WEAPONS[wepname]?.Components[key]
-								if not _value then
-									print("the key is not a valid key see weapons.lua in componets for the keys that need to be used.")
+						-- is comps an array ?
+						if type(comps) == "table" then
+							for key, value in pairs(comps) do
+								if type(key) ~= "string" then
 									return false
+								else
+									-- is valid key ?
+									local _value = SHARED_DATA.WEAPONS[wepname]?.Components[key]
+									if not _value then
+										print("the key is not a valid key see weapons.lua in componets for the keys that need to be used.")
+										return false
+									end
 								end
 							end
+
+							return true
 						end
-
-						return true
+						return false
 					end
-					return false
-				end
 
-				if not isValidTable() then
-					print("comps is not a table , this table needs to have keys as strings see weapons.lua in componets for the keys that need to be used.")
-					return respond(cb, nil)
+					if not isValidTable() then
+						print("comps is not a table , this table needs to have keys as strings see weapons.lua in componets for the keys that need to be used.")
+						return respond(cb, nil)
+					end
 				end
 			end
 
