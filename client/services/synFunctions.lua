@@ -220,30 +220,3 @@ function NUIService.NUITakeFromHideout(obj)
         TriggerServerEvent("syn_underground:TakeFromHideout", json.encode(obj))
     end
 end
-
-function NUIService.OpenBankInventory(bankName, bankId, capacity)
-    UTILS.APPLY_POSFX()
-    SetNuiFocus(true, true)
-    SendNUIMessage({
-        action = "display",
-        type = "bank",
-        title = bankName,
-        bankId = bankId,
-        capacity = capacity,
-        search = CONFIG.INVENTORY_UI.SEARCH_BAR.ENABLE,
-    })
-    IS_INV_OPEN = true
-    NUI_SERVICE.INVENTORY.GET_LOAD()
-end
-
-function NUIService.NUIMoveToBank(obj)
-    TriggerServerEvent("vorp_bank:MoveToBank", json.encode(obj))
-end
-
-function NUIService.NUITakeFromBank(obj)
-    if not SynPending then
-        SynPending = true
-
-        TriggerServerEvent("vorp_bank:TakeFromBank", json.encode(obj))
-    end
-end

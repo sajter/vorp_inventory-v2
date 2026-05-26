@@ -2616,10 +2616,6 @@ $("document").ready(function () {
                 hideoutId = event.data.hideoutId;
                 INVENTORY.SECONDARY.INIT(event.data.title, event.data.capacity)
             }
-            if (event.data.type == "bank") {
-                bankId = event.data.bankId;
-                INVENTORY.SECONDARY.INIT(event.data.title, event.data.capacity)
-            }
             if (event.data.type == "clan") {
                 clanid = event.data.clanid;
                 INVENTORY.SECONDARY.INIT(event.data.title, event.data.capacity)
