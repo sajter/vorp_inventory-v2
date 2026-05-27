@@ -30,6 +30,10 @@ local Weapon <const> = LIB.Class:Create({
 	end,
 
 	get = {
+		getDegradation     = function(self)
+			return self.degradation
+		end,
+
 		getId              = function(self)
 			return self.id
 		end,

@@ -1014,6 +1014,7 @@ local nuiService = {
 
 			local weapon <const> = PLAYER_INVENTORY.WEAPONS[tonumber(data.id)]
 			if not weapon then return end
+
 			weapon:removeComponent(data.component, data.slotCategory)
 			NUI_SERVICE.INVENTORY.UPDATE_WEAPON(tonumber(data.id))
 		end,
