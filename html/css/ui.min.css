@@ -756,9 +756,10 @@ body {
 }
 
 #inventoryHud .mainButtonContainer {
-    align-items: flex-start;
+    align-items: center;
     gap: 0.25vw;
     padding-left: 3.5vw;
+    width: 7.5vw;
 }
 
 #inventoryHud .mainButtonContainer>.mainButton-close,
@@ -928,6 +929,13 @@ body {
     min-width: 6vw;
 }
 
+.mainButton-toolbar-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25vw;
+    margin-left: auto;
+}
 
 #inventoryHud .mainButtonContainer .mainButton-close,
 .mainButton.mainButton-close {
